@@ -3,11 +3,12 @@
 namespace App\Http\Requests\Team\TeamController;
 
 use App\Builder\ReturnApi;
+use App\Helpers\Requests\TeamIdRuleHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class StoreRequest extends FormRequest
+class FindRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,22 +28,16 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => [
-                "string",
-                "min:8",
-                "unique:teams,name",
-                "required"
-            ]
+            "id" => TeamIdRuleHelper::rule()
         ];
     }
 
-    public function attributes(): array
+    public function prepareForValidation(): void
     {
-        return [
-            "name" => "nome",
-        ];
+        $this->merge([
+            'id' => $this->route('id'),
+        ]);
     }
-
 
     public function failedValidation(Validator $validator)
     {

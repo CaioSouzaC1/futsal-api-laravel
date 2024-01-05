@@ -18,3 +18,6 @@ Route::prefix('/auth')->group(base_path('routes/api/auth.php'));
 Route::prefix("/player")->group(function () {
     require base_path("routes/api/player.php");
 });
+Route::prefix("/team")->group(function () {
+    require base_path("routes/api/team.php");
+});

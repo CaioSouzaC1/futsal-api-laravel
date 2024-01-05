@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Player\PlayerController;
 
 use App\Builder\ReturnApi;
+use App\Helpers\Requests\TeamIdRuleHelper;
+use App\Helpers\Requests\TshirtPlayerRuleHelper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -31,11 +33,8 @@ class StoreRequest extends FormRequest
                 "string",
                 "required"
             ],
-            "tshirt" => [
-                "int",
-                "min:0",
-                "max:999"
-            ]
+            "tshirt" => TshirtPlayerRuleHelper::rule($this->input("team_id")),
+            "team_id" => TeamIdRuleHelper::rule()
         ];
     }
 
@@ -43,7 +42,8 @@ class StoreRequest extends FormRequest
     {
         return [
             "name" => "nome",
-            "tshirt" => "camisa",
+            "tshirt" => TshirtPlayerRuleHelper::attribute(),
+            "team_id" => TeamIdRuleHelper::attribute(),
         ];
     }
 
