@@ -21,3 +21,6 @@ Route::prefix("/player")->group(function () {
 Route::prefix("/team")->group(function () {
     require base_path("routes/api/team.php");
 });
+Route::prefix("/game")->group(function () {
+    require base_path("routes/api/game.php");
+});
