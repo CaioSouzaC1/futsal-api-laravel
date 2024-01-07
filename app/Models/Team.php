@@ -15,11 +15,8 @@ class Team extends Model
     protected $fillable = [
         "name",
         "points",
-        "goals",
         "scored_goals",
         "conceded_goals",
-        "wins",
-        "defeats"
     ];
 
     public function players(): HasMany
