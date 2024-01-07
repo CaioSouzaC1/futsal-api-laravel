@@ -6,6 +6,7 @@ use App\Builder\ReturnApi;
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Game\GameController\DeleteRequest;
+use App\Http\Requests\Game\GameController\FindRequest;
 use App\Http\Requests\Game\GameController\StoreRequest;
 use App\Http\Requests\Game\GameController\UpdateRequest;
 use App\Models\Game;
@@ -19,6 +20,17 @@ class GameController extends Controller
             return ReturnApi::success(Game::get(), "Jogos consultados com sucesso");
         } catch (Throwable $e) {
             throw new ApiException("Erro ao consultar Jogos");
+        }
+    }
+
+    public function find(FindRequest $request)
+    {
+        try {
+
+            $data = $request->validated();
+            return ReturnApi::success(Game::find($data["id"]), "Jogo consultado com sucesso");
+        } catch (Throwable $e) {
+            throw new ApiException("Erro ao consultar jogo");
         }
     }
 

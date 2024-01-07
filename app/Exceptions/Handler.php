@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Builder\ReturnApi;
 use BadMethodCallException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -61,6 +62,11 @@ class Handler extends ExceptionHandler
             return ReturnApi::error('Rota não encontrada', null, 404);
         }
 
-        return parent::render($request, $exception);
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return ReturnApi::error('Metodo não suportado nesta rota', null, 404);
+        }
+
+        return ReturnApi::error("Erro inesperado", null, 500);
+
     }
 }
