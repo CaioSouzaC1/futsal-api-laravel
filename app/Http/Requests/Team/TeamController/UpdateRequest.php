@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "id" => TeamIdRuleHelper::attribute(),
+            "id" => TeamIdRuleHelper::rule(),
             "name" => [
                 "string",
                 "min:8",

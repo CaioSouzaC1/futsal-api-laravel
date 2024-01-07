@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Builder\ReturnApi;
 use BadMethodCallException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -55,7 +56,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof BadMethodCallException) {
-            return ReturnApi::error('Metodo errado chamado', null, 500);
+            return ReturnApi::error('Método errado chamado', null, 500);
         }
 
         if ($exception instanceof NotFoundHttpException) {
@@ -63,10 +64,14 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
-            return ReturnApi::error('Metodo não suportado nesta rota', null, 404);
+            return ReturnApi::error('Método não suportado nesta rota', null, 404);
         }
 
-        return ReturnApi::error("Erro inesperado", null, 500);
+        if ($exception instanceof ValidationException) {
+            return parent::render($request, $exception);
+        }
+
+        return ReturnApi::error("Erro inesperado na API", null, 500);
 
     }
 }
