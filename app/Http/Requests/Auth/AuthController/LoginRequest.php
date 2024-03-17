@@ -36,12 +36,7 @@ class LoginRequest extends FormRequest
                 "required",
                 "min:6"
             ],
-            "confirm_password" => [
-                "string",
-                "required",
-                "min:6",
-                "same:password"
-            ]
+        
         ];
     }
 
@@ -50,7 +45,6 @@ class LoginRequest extends FormRequest
         return [
             "email" => "e-mail",
             "password" => "senha",
-            "confirm_password" => "confirmação de senha"
         ];
     }
 

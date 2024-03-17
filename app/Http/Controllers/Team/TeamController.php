@@ -17,7 +17,7 @@ class TeamController extends Controller
     public function index()
     {
         try {
-            return ReturnApi::success(Team::with("players")->get(), "Times Consultados com sucesso");
+            return ReturnApi::success(Team::with("players")->orderBy('points', 'desc')->get(), "Times Consultados com sucesso");
         } catch (Throwable $e) {
             throw new ApiException("Erro ao consultar Times");
         }

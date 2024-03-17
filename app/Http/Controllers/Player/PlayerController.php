@@ -19,7 +19,7 @@ class PlayerController extends Controller
     public function index()
     {
         try {
-            return ReturnApi::success(Player::all(), "Jogadores Consultados com sucesso");
+            return ReturnApi::success(Player::with(["team"])->orderBy('team_id')->get(), "Jogadores Consultados com sucesso");
         } catch (Throwable $e) {
             throw new ApiException("Erro ao consultar jogadores");
         }
